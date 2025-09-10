@@ -55,15 +55,40 @@ public class BST {
        
     }
 
-    public boolean equals(BST bst){
-        if (bst.isEmpty() && !this.isEmpty()) return false;
+    public int search(int value){
+        if (isEmpty()) throw new IllegalArgumentException();
 
-        else if(!bst.isEmpty() && this.isEmpty()) return false;
+        return search(root, value).value;
+    }
+
+    private Node search(Node current, int value){
+        if (current == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if(current.value == value) return current;
+
+        if (current.value > value) {
+            return search(current.left, value);
+        }
+
+        else{
+            return search(current.rigth, value);
+        }
+    }
+
+    public int romeve(int valor){
+        return -1;
+    }
+
+    public boolean equals(BST bst){
+        if (bst.size != this.size) return false;
 
         return compare(root, bst.getRoot());
     }
 
     private boolean compare(Node current1, Node current2){
+
         if (current1 != null && current2 != null) {
 
             if (current1.value != current2.value) {
