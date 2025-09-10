@@ -1,0 +1,11 @@
+# Pastas de build
+/build/
+.gradle/
+
+# Logs
+*.log
+
+# Configurações de IDE
+.idea/
+*.iml
+.vscode/
