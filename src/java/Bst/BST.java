@@ -81,6 +81,52 @@ public class BST {
         return -1;
     }
 
+    private int remove(Node node){
+        if  (node == null) throw new IllegalArgumentException();
+
+        if  (node.isLeaf()) caseOne(node);
+
+        else if (node.hasOnlyLeftChild() || node.hasOnlyRightChild()) {
+            caseTwo(node);
+        }
+    }
+
+    private void caseTwo(Node node){
+        if (node == null) throw new IllegalArgumentException();
+
+        if (node.hasOnlyLeftChild()) {
+            node.left.parent = node.parent;
+
+            if (node.parent.value > node.value) {
+                node.parent.left = node.left;
+
+            } else{
+                node.parent.rigth = node.left;
+            }
+            
+        } else{
+            node.rigth.parent = node.parent;
+
+            if (node.parent.value > node.value) {
+                node.parent.left = node.rigth;
+
+            } else{
+                node.parent.rigth = node.rigth;
+            }
+        }
+    }
+
+    private void caseOne(Node node){
+        if (node == null) throw new IllegalArgumentException();
+
+        if (node.parent.value > node.value) {
+            node.parent.left = null;
+
+        } else{
+            node.parent.rigth = null;
+        }
+    }
+
     public boolean equals(BST bst){
         if (bst.size != this.size) return false;
 
@@ -166,6 +212,14 @@ class Node {
 
     public boolean isLeaf(){
         return this.left == null && this.rigth == null;
+    }
+
+    public boolean hasOnlyLeftChild(){
+        return (this.left != null && this.rigth == null);
+    }
+
+    public boolean hasOnlyRightChild(){
+        return (this.left == null && this.rigth != null);
     }
 
 }
