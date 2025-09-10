@@ -7,11 +7,11 @@ public class Heap {
     public Heap(int[] array){
         this.Heap = array;
         this.size = array.length;
-        this.buildHeap();
+        buildHeap(this.Heap);
     }
 
-    private void buildHeap(){
-        for(int i = parent(this.size - 1); i >= 0; i--){
+    private void buildHeap(int[] v){
+        for(int i = parent(v.length - 1); i >= 0; i--){
             heapifyDow(i);
         }
     }
@@ -63,7 +63,7 @@ public class Heap {
         int indexMax = max(index, left(index), right(index));
 
         if (indexMax != index) {
-            swaap(index, indexMax);
+            swaap(this.Heap, index, indexMax);
             heapifyDow(indexMax);
         }
 
@@ -99,16 +99,49 @@ public class Heap {
         this.size += 1;
 
         while (i > 0 && parent(i) < this.Heap[i]) {
-            swaap(i, parent(i));
+            swaap(this.Heap, i, parent(i));
             
             i = parent(i);
         }
 
     }
 
-    private void swaap(int i, int j){
-        int aux = this.Heap[i];
-        this.Heap[i] = this.Heap[j];
-        this.Heap[j] = aux;
+    public int[] heapSort(int[] v){
+        buildHeap(v);
+
+        for(int i = v.length -1; i > 0; i--){
+            swaap(v, i, 0);
+
+            heapify(v, 0, i);
+        }
+
+        return v;
+    }
+
+    private void heapify(int[] v, int index, int size){
+        if(isLeaf(index) || isInvalidIndex(index)) return;
+
+        int max = index;
+        int left = left(index);
+        int right = right(index);
+
+        if(left < size && v[left] > v[max]){
+            max = left;
+        }
+
+        if(right < size && v[right] > v[max]){
+            max = right;
+        }
+
+        if(max != index){
+            swaap(v, index, max);
+            heapify(v, max, size);
+        }
+    }
+
+    private void swaap(int[] v , int i, int j){
+        int aux = v[i];
+        v[i] = v[j];
+        v[j] = aux;
     }
 }
