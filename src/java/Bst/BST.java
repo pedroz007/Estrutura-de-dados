@@ -15,6 +15,10 @@ public class BST {
         return size == 0;
     }
 
+    public Node getRoot(){
+        return this.root;
+    }
+
     public void add(int value){
         Node newNode = new Node(value);
         
@@ -56,7 +60,24 @@ public class BST {
 
         else if(!bst.isEmpty() && this.isEmpty()) return false;
 
-        return true;
+        return compare(root, bst.getRoot());
+    }
+
+    private boolean compare(Node current1, Node current2){
+        if (current1 != null && current2 != null) {
+
+            if (current1.value != current2.value) {
+                return false;
+            }
+
+            compare(current1.left, current2.left);
+            compare(current1.rigth, current2.rigth);
+
+        } else if (current1 == null && current2 == null) {
+            return true;
+        }
+
+        return false;
     }
 
     public void bfs(){
