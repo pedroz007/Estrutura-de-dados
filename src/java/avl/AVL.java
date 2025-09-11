@@ -25,7 +25,13 @@ public class AVL {
                     aux.right = newNode;
                     newNode.parent = aux;
 
-                    checkBranch(newNode);
+                    Node node = checkBranch(newNode);
+
+                    if (node != null) {
+                        rotation(node);
+                    }
+
+                    return;
                 }
                 aux = aux.right;
                 
@@ -33,8 +39,14 @@ public class AVL {
                 if (aux.left == null) {
                     aux.left = newNode;
                     newNode.parent = aux;
+                    
+                    Node node = checkBranch(newNode);
 
-                    checkBranch(newNode);
+                    if (node != null) {
+                        rotation(node);
+                    }
+
+                    return;
                 }
 
                 aux = aux.left;
@@ -43,7 +55,75 @@ public class AVL {
         }
     }
 
-    public Node checkBranch(Node node){
+    private void rotation(Node node){
+        Node x = node;
+
+        if (x.isLeftPending()) {
+            Node y = x.left;
+
+            if (y != null) rotationRight(x);
+
+            else{
+                rotationLeft(y);
+                rotationRight(x);
+
+            }
+            
+        } else{
+            Node y = x.right;
+
+            if (y != null) rotationLeft(x);
+
+            else{
+                rotationRight(y);
+                rotationLeft(x);
+            }
+        }
+
+    }
+
+    private void rotationLeft(Node node){
+        Node newRoot = node.right;
+        newRoot.parent = node.parent;
+
+        node.right = newRoot.left;
+        newRoot.left = node;
+
+        node.parent = newRoot;
+
+        if (newRoot.parent != null) {
+            if (newRoot.parent.value > newRoot.value) newRoot.parent.left = newRoot;
+
+            else newRoot.parent.right = newRoot;
+
+        } else{
+            this.root = newRoot; 
+        }
+    }
+
+    private void rotationRight(Node node){
+        Node newRoot = node.left;
+        newRoot.parent = node.parent;
+
+        node.left = newRoot.right;
+        newRoot.right = node;
+
+        node.parent = newRoot;
+
+        if (newRoot.parent != null) {
+            if (newRoot.parent.value > newRoot.value) newRoot.parent.left = newRoot;
+
+            else newRoot.parent.right = newRoot;
+
+        } else{
+            this.root = newRoot; 
+        }
+        
+
+
+    }
+
+    private Node checkBranch(Node node){
         Node aux = node;
 
         while (aux != null) {
