@@ -57,7 +57,7 @@ public class Heap {
 
     private void heapifyDow(int index){
         if (isLeaf(index) || isInvalidIndex(index)) {
-            throw new IllegalArgumentException();
+            return;
         }
 
         int indexMax = max(index, left(index), right(index));
