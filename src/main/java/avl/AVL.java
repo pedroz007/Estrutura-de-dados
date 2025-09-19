@@ -1,3 +1,5 @@
+package avl;
+
 public class AVL {
     private Node root;
     private int size;
@@ -61,7 +63,7 @@ public class AVL {
         if (x.isLeftPending()) {
             Node y = x.left;
 
-            if (y != null) rotationRight(x);
+            if (y.left != null) rotationRight(x);
 
             else{
                 rotationLeft(y);
@@ -72,7 +74,7 @@ public class AVL {
         } else{
             Node y = x.right;
 
-            if (y != null) rotationLeft(x);
+            if (y.right != null) rotationLeft(x);
 
             else{
                 rotationRight(y);
@@ -152,15 +154,15 @@ class Node{
     }
 
     public boolean isLeaf(){
-        return this.left == null && this.rigth == null;
+        return this.left == null && this.right == null;
     }
 
     public boolean hasOnlyLeftChild(){
-        return (this.left != null && this.rigth == null);
+        return (this.left != null && this.right == null);
     }
 
     public boolean hasOnlyRightChild(){
-        return (this.left == null && this.rigth != null);
+        return (this.left == null && this.right != null);
     }
 
     public int height(){

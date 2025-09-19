@@ -89,6 +89,8 @@ public class BST {
         else if (node.hasOnlyLeftChild() || node.hasOnlyRightChild()) {
             caseTwo(node);
         }
+
+        return -1;
     }
 
     private void caseTwo(Node node){
